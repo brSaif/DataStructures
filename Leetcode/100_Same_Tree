@@ -1,0 +1,63 @@
+# 100. Same Tree
+## Problem 
+
+Given the roots of two binary trees p and q, 
+write a function to check if they are the same or not.
+
+Two binary trees are considered the same if they are structurally identical, 
+and the nodes have the same value.
+
+### Exemples:
+Input: p = [1,2,3], q = [1,2,3]
+Output: true
+
+Input: p = [1,2,4], q = [1,2,3]
+Output: false
+
+## Solutions
+### DFS Recursive :
+public bool IsSameTree(TreeNode p, TreeNode q){
+    if (p is null && q is null)  return true;
+    if (p is null || q is null) return false;
+    if (p.val != q.val) return false;
+    return IsSameTree(p.left, q.left) & IsSameTree(p.right; q.right);
+}
+
+### DFS 
+public bool IsSameTree(TreeNode p, TreeNode q){
+    Stack<(TreeNode p, TreeNode q)> stack = new ();
+    stack.Push((p, q));
+
+    while (stack.Any()){
+        var curr = stack.Pop();
+
+        if (curr.p is null && curr.q is null)  continue;
+        if (curr.p is null || curr.q is null) return false;
+        if (curr.p.val != curr.q.val) return false;
+
+        stack.Push((curr.q.left, curr.p.left));
+        stack.Push((curr.q.right, curr.p.right));
+    }
+    
+    return true;
+}
+
+### BfS 
+public bool IsSameTree(TreeNode p, TreeNode q){
+    Queue<(TreeNode p, TreeNode q)> queue = new ();
+    queue.Enqueue((p, q));
+
+    while (queue.Any()){
+        var curr = queue.Dequeue();
+
+        if (curr.p is null && curr.q is null) continue;
+        if (curr.p is null || curr.q is null) return false;
+        if (curr.p.val != curr.q.val) return false;
+
+        queue.Enqueue((curr.p.left, curr.q.left));
+        queue.Enqueue((curr.p.right, curr.q.right));
+    }
+
+    return true;
+}
+
